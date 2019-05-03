@@ -161,6 +161,47 @@ public class Graph {
   } // dump()
   
   /**
+   * Dump the graph in a more useful way.
+   */
+  public void dumpBetter(PrintWriter pen) {
+    pen.println("A Graph");
+    pen.println("  with " + numVertices + " vertices");
+    pen.println("  and " + numEdges + " edges");
+    for (int vertex = 0; vertex < vertices.length; vertex++) {
+      if (validVertex(vertex)) {
+        pen.print(vertexName(vertex) + ": ");
+        for (Edge e : vertices[vertex]) {
+          pen.print(e + " ");
+        } // for()
+        pen.println();
+      } // if
+    } // for
+    pen.println();
+  } // dump()
+  
+  /**
+   * Dump the vertixes reachable from the given vertex
+   */
+  public void reachableFrom(PrintWriter pen, int vertex) {
+    pen.println("All vertices reachable from " + vertex + " / " + vertexName(vertex) + ":");
+    Iterator<Edge> it = this.vertices[vertex].iterator();
+    boolean[] processed = new boolean[vertices.length];
+    boolean none = true;
+    while(it.hasNext()) {
+      int temp = it.next().to();
+      if (!processed[temp]) {
+        pen.println(" * " + temp + " AKA " + vertexName(temp));
+        none = false;
+        processed[temp] = true;
+      } // if unprocessed
+    } // print the indices
+    if (none) {
+      pen.println("None.");
+    } // if
+    pen.println();
+  } // dump()
+  
+  /**
    * Get the number of edges.
    */
   public int numEdges() {
